@@ -417,7 +417,7 @@ SHIFTF
 ;; using `mapcar` and `list` in lisp:
 
 (mapcar #'list '(1 2 3) '(4 5 6) '(7 8 9))
-;; ((1 4 7) 2 5 8) (3 6 9))
+;; ((1 4 7) (2 5 8) (3 6 9))
 ;; shortest defines length or number of outcome!
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -428,6 +428,11 @@ SHIFTF
      (pairlis '(1 2) '(a b) alist))
 ;; ((2 . B) (1 . A) (HELLO . WORLD) (FOO . BAR))
 
+(mapcar #'list '(1 2 3) '(a b c))
+;; ((1 a) (2 b) (3 c))
+
+;; `mapcan` or `collect nconcing` to flatten result
+
 
 ;; python's generators
 
@@ -435,6 +440,8 @@ SHIFTF
 ;; ( ... if ... else ... for x in l)
 ;; ( ... for x in l if ... )
 ;; ( ...wth with i,x... for i,x in enumerate(l))
+
+;; python's generators could be realized using streams!
 
 
 
@@ -474,6 +481,8 @@ SHIFTF
   h)
 
 
+
+
 (loop for k in key-list
       for v in val-list
       do (setf (gethash k h) 
@@ -492,7 +501,14 @@ SHIFTF
 (two-lists-2-dict '(1 2 3 4 5) '(a b c d e))
 ;; #S(HASH-TABLE :TEST FASTHASH-EQL (5 . E) (4 . D) (3 . C) (2 . B) (1 . A))
 
+;; as function:
 
+(defun dictionary-assignment (keys values)
+  (let ((h (make-hash-table :test #'equal)))
+    (loop for k in keys
+          for v in values
+          do (setf (gehash k h) v))
+    h))
 
 
 
